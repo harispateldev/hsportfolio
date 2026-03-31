@@ -123,12 +123,12 @@ export const mockData = {
         text: 'Very satisfied with the final outcome. Great commitment to deliver quality service. Cheers team. Will get back again.',
       },
     ],
-    fiverr: {
-      username: "harispatel62",
-      url: "https://www.fiverr.com/harispatel62",
-      rating: 5.0,
-      bannerText: "HSP designer & developers"
-    }
+    // fiverr: {
+    //   username: "harispatel62",
+    //   url: "https://www.fiverr.com/harispatel62",
+    //   rating: 5.0,
+    //   bannerText: "HSP designer & developers"
+    // }
   },
   contact: {
     email: "harispatel62@gmail.com",
@@ -136,7 +136,7 @@ export const mockData = {
       { name: 'LinkedIn', url: 'https://www.linkedin.com/in/haris-patel-dev/', iconName: 'LinkedinOutlined', darkColor: COLORS.BRAND.LINKEDIN, lightColor: COLORS.BRAND.LINKEDIN },
       { name: 'GitHub', url: 'https://github.com/Harispateldev', iconName: 'GithubOutlined', darkColor: COLORS.WHITE, lightColor: COLORS.DARK_GREY },
       { name: 'GitLab', url: 'https://gitlab.com/harispatel', iconName: 'GitlabOutlined', darkColor: COLORS.BRAND.GITLAB, lightColor: COLORS.BRAND.GITLAB },
-      { name: 'Fiverr', url: 'https://www.fiverr.com/harispatel62', iconName: 'Fiverr', darkColor: COLORS.BRAND.FIVERR, lightColor: COLORS.BRAND.FIVERR },
+      // { name: 'Fiverr', url: 'https://www.fiverr.com/harispatel62', iconName: 'Fiverr', darkColor: COLORS.BRAND.FIVERR, lightColor: COLORS.BRAND.FIVERR },
       { name: 'Mail', url: 'mailto:harispatel62@gmail.com', iconName: 'MailOutlined', darkColor: COLORS.BRAND.GOOGLE_RED, lightColor: COLORS.BRAND.GOOGLE_RED },
       { name: 'WhatsApp', url: 'https://wa.me/+917795434226', iconName: 'WhatsAppOutlined', darkColor: COLORS.BRAND.WHATSAPP, lightColor: COLORS.BRAND.WHATSAPP },
     ],

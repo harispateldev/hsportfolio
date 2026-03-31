@@ -95,7 +95,7 @@ const StatsSectionProps_Inner: React.FC<StatsSectionProps> = ({ isDark }) => {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Main Grid: Equalized heights with items-stretch */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mb-12">
             
             {/* Daily.dev Platform Card with Glassmorphism */}
             <div className={`rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] ${isDark ? 'glass-effect bg-white/5' : 'glass-effect-light'}`}>
@@ -172,59 +172,7 @@ const StatsSectionProps_Inner: React.FC<StatsSectionProps> = ({ isDark }) => {
               </div>
             </div>
 
-            {/* Fiverr Profile Card with Glassmorphism */}
-            <div className={`flex flex-col rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] ${isDark ? 'glass-effect bg-white/5' : 'glass-effect-light'}`}>
-              <div className="relative group overflow-hidden">
-                <div
-                  className="w-full h-32 flex items-center justify-center text-5xl font-black transition-transform duration-500 group-hover:scale-110"
-                  style={{ background: COLORS.GRADIENTS.FIVERR }}
-                >
-                  <span className="drop-shadow-lg" style={{ color: COLORS.BRAND.FIVERR }}>HSP</span>
-                  <span className="text-lg ml-2 text-white opacity-40 font-serif lowercase italic">
-                    {stats.fiverr.bannerText}
-                  </span>
-                </div>
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="text-white text-xs font-bold tracking-widest bg-black/50 px-4 py-2 rounded-full border border-white/20">FIVERR PRO</span>
-                </div>
-              </div>
-              
-              <div className="p-8 flex-grow flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg"
-                      style={{ background: COLORS.BRAND.FIVERR }}
-                    >
-                      {stats.fiverr.username[0].toUpperCase()}
-                    </div>
-                    <span className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>
-                      @{stats.fiverr.username}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 mb-6">
-                    <span className="text-lg font-bold mr-2" style={{ color: COLORS.PRIMARY }}>{stats.fiverr.rating.toFixed(1)}</span>
-                    {[1,2,3,4,5].map(i => (
-                      <span key={i} className="text-sm" style={{ color: COLORS.PRIMARY }}>★</span>
-                    ))}
-                  </div>
-                </div>
-                
-                <a
-                  href={stats.fiverr.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-center w-full py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all"
-                  style={{ 
-                    backgroundColor: COLORS.BRAND.FIVERR,
-                    color: COLORS.WHITE
-                  }}
-                >
-                  Hire Me on Fiverr
-                  <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
-                </a>
-              </div>
-            </div>
+
           </div>
 
           {/* Quick Stats Counter Row - Utilizing Bottom Empty Space */}
