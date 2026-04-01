@@ -2,6 +2,8 @@ import { useAppSelector } from '../redux/hooks'
 import { Typewriter } from 'react-simple-typewriter'
 import { IMAGES } from '../constants/IMAGES'
 import { COLORS } from '../constants/colors'
+import DynamicBackground from './common/DynamicBackground'
+import { motion } from 'framer-motion'
 
 interface HeroSectionProps {
   isDark: boolean
@@ -20,34 +22,45 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
     <section
       id="home"
       // Standard section background based on theme
-      className={`relative flex flex-col items-center justify-center min-h-screen py-16 ${isDark ? 'section-dark-1' : 'section-light-1'}`}
+      className={`relative flex flex-col items-center justify-center min-h-screen py-16 overflow-hidden ${isDark ? 'section-dark-1' : 'section-light-1'}`}
     >
+      <DynamicBackground isDark={isDark} />
+      
       {/* Brand Identity: Logo Linked to Blog */}
-      <a
+      <motion.a
         href={hero.logoLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="mb-6"
+        className="mb-6 z-10"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
       >
         <img
           src={isDark ? IMAGES.hsLogo : IMAGES.DarkLogo}
           alt="HSP DEV Logo"
           className="w-24 h-auto object-contain"
         />
-      </a>
+      </motion.a>
 
       {/* Primary Branding: Developer Name */}
-      <h1
-        className="text-2xl font-bold tracking-widest uppercase mb-2"
+      <motion.h1
+        className="text-2xl font-bold tracking-widest uppercase mb-2 z-10"
         style={{ color: isDark ? COLORS.WHITE : COLORS.DARK_GREY }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
       >
         {hero.name}
-      </h1>
+      </motion.h1>
 
       {/* Dynamic Subtitle: Professional Roles (Typewriter Animation) */}
-      <p
-        className="text-sm font-semibold tracking-widest uppercase"
-        style={{ color: isDark ? COLORS.LIGHT_GREY : '#636e72' }}
+      <motion.p
+        className="text-sm font-semibold tracking-widest uppercase z-10"
+        style={{ color: isDark ? COLORS.LIGHT_GREY : COLORS.DARK_GREY_TEXT }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
       >
         <Typewriter
           words={hero.roles}
@@ -58,7 +71,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
           deleteSpeed={50}
           delaySpeed={1500}
         />
-      </p>
+      </motion.p>
 
       {/* On-Page Navigation: Indicator to scroll to About Section */}
       <div className="absolute bottom-10 left-0 right-0 flex justify-center">

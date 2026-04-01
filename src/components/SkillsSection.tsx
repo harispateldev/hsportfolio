@@ -1,5 +1,6 @@
 import { useAppSelector } from '../redux/hooks'
 import { COLORS } from '../constants/colors'
+import { motion } from 'framer-motion'
 
 interface SkillsSectionProps {
   isDark: boolean
@@ -38,20 +39,48 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ isDark }) => {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Skills Icon Grid */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+        <motion.div 
+          className="flex flex-wrap justify-center gap-2 sm:gap-4"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
+        >
           {skillsWithIcons?.map((skill, idx) => (
-            <div key={idx} className="skill-icon-wrapper">
-              {/* Skill Icon (SVG) */}
-              {skill.icon}
+            <motion.div 
+              key={idx} 
+              className="skill-icon-wrapper group"
+              variants={{
+                hidden: { opacity: 0, scale: 0.8, y: 20 },
+                show: { opacity: 1, scale: 1, y: 0 }
+              }}
+              whileHover={{ 
+                scale: 1.1,
+                backgroundColor: isDark ? 'rgba(233, 213, 161, 0.1)' : 'rgba(0, 0, 0, 0.05)',
+                borderRadius: '12px'
+              }}
+            >
+              {/* Skill Icon */}
+              <div className="transition-transform duration-300 group-hover:scale-110">
+                {skill.icon}
+              </div>
               {/* Skill Name Label */}
               <span
-                className={`text-xs font-medium tracking-wide ${isDark ? 'text-gray-300' : 'text-white'}`}
+                className={`text-xs font-semibold tracking-wide transition-colors duration-300 ${isDark ? 'text-gray-400 group-hover:text-white' : 'text-gray-100 group-hover:text-white'}`}
               >
                 {skill.name}
               </span>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -66,19 +66,22 @@ export const mockData = {
       name: 'DENTAL CHART',
       year: '2023',
       stack: 'React Js, Node (Adonis), MySql, Ant Design',
-      imageKey: 'dental'
+      imageKey: 'dental',
+      images: ['dental', 'dental1']
     },
     {
       name: 'THE PARTIMERS',
       year: '2022',
       stack: 'React Js, Node (Express), MySql, Material UI',
-      imageKey: 'partimer'
+      imageKey: 'partimer',
+      images: ['partimer', 'x']
     },
     {
       name: 'MY PHONE BOOK',
       year: '2021',
       stack: 'React Js, PHP (Laravel), MySql, Material UI',
-      imageKey: 'phonebook'
+      imageKey: 'phonebook',
+      images: ['phonebook', 'phonebook2']
     },
   ],
   stats: {

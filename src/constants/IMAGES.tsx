@@ -7,9 +7,9 @@ import Tailwind from '../assets/Skills/tailwind.png'
 import HtmlLogo from '../assets/Skills/Html.png'
 import CssLogo from '../assets/Skills/css.png'
 import JsLogo from '../assets/Skills/javascript.png'
-import BootstrapLogo from '../assets/Skills/Bootstrap.png'
+import BootstrapLogo from '../assets/Skills/bootstrap.png'
 import Mysql from '../assets/Skills/mysql.png'
-import php from '../assets/Skills/php.png'
+import php from '../assets/Skills/PHP.png'
 import nodejs from '../assets/Skills/nodejs.png'
 export const IMAGES = {
     hsLogo,

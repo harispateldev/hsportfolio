@@ -1,6 +1,7 @@
 import { useAppSelector } from '../redux/hooks'
 import { useState } from 'react'
 import { COLORS } from '../constants/colors'
+import { motion } from 'framer-motion'
 import dentalImg from '../assets/dental.png'
 import partimerImg from '../assets/partimer.png'
 import phonebookImg from '../assets/phonebook.png'
@@ -57,7 +58,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDark }) => {
         {/* Project Grid Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects?.map((project, idx) => (
-            <div
+            <motion.div
               key={idx}
               className={`project-card ${isDark ? '' : 'project-card-light'}`}
               style={{
@@ -69,26 +70,35 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDark }) => {
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && openModal(idx)}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              whileHover={{ 
+                y: -10, 
+                scale: 1.02,
+                boxShadow: isDark ? '0 20px 40px rgba(0,0,0,0.6)' : '0 20px 40px rgba(0,0,0,0.1)'
+              }}
             >
               {/* Project Visual Representation (Image with Hover Effect) */}
-              <div className="w-full h-40 overflow-hidden relative group">
+              <div className="w-full h-48 overflow-hidden relative group">
                 <img
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 {/* Visual Feedback on Hover */}
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
-                  <span className="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 tracking-widest uppercase">
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 tracking-widest uppercase border border-white px-4 py-2 bg-black/20 backdrop-blur-sm">
                     View Details
                   </span>
                 </div>
               </div>
 
               {/* Project Descriptive Meta (Name, Year, Stack) */}
-              <div className="p-4">
+              <div className="p-5">
                 <p
-                  className={`text-xs font-bold tracking-widest mb-1 ${isDark ? 'text-white' : 'text-gray-800'}`}
+                  className={`text-sm font-bold tracking-widest mb-1 ${isDark ? 'text-white' : 'text-gray-800'}`}
                 >
                   {project.name}
                 </p>
@@ -98,13 +108,13 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDark }) => {
                   {project.year}
                 </p>
                 <p
-                  className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
+                  className={`text-xs leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
                 >
-                  <span className="font-medium">Stack used: </span>
+                  <span className="font-medium">Stack: </span>
                   {project.stack}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

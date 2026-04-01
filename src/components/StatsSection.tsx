@@ -114,8 +114,8 @@ const StatsSectionProps_Inner: React.FC<StatsSectionProps> = ({ isDark }) => {
                     target.style.display = 'none'
                     const parent = target.parentElement
                     if (parent) {
-                      parent.style.cssText = `background: linear-gradient(135deg, ${COLORS.DARK_GREY} 0%, #1a1a2e 100%); padding: 40px; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;`
-                      parent.innerHTML = `<span style="color:#e9d5a1;font-size:32px;font-weight:900;">daily.dev</span><span style="color:#aaa;font-size:14px;">${stats.dailyDevUsername}</span><span style="color:#e9d5a1;font-size:12px;border:1px solid #e9d5a1;padding:4px 12px;border-radius:20px;margin-top:10px;">View Profile →</span>`
+                      parent.style.cssText = `background: linear-gradient(135deg, ${COLORS.DARK_GREY} 0%, ${COLORS.UI.DAILY_DEV_DARK} 100%); padding: 40px; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;`
+                      parent.innerHTML = `<span style="color:${COLORS.PRIMARY};font-size:32px;font-weight:900;">daily.dev</span><span style="color:${COLORS.GREY_TEXT};font-size:14px;">${stats.dailyDevUsername}</span><span style="color:${COLORS.PRIMARY};font-size:12px;border:1px solid ${COLORS.PRIMARY};padding:4px 12px;border-radius:20px;margin-top:10px;">View Profile →</span>`
                     }
                   }}
                 />
@@ -131,9 +131,9 @@ const StatsSectionProps_Inner: React.FC<StatsSectionProps> = ({ isDark }) => {
                   CLIENT REVIEWS
                 </span>
                 <div className="flex gap-2">
-                  <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                  <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                  <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS.UI.TERMINAL_RED }} />
+                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS.UI.TERMINAL_YELLOW }} />
+                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS.UI.TERMINAL_GREEN }} />
                 </div>
               </div>
 
@@ -145,7 +145,7 @@ const StatsSectionProps_Inner: React.FC<StatsSectionProps> = ({ isDark }) => {
                         <div
                           className="w-14 h-14 rounded-full flex items-center justify-center text-white text-base font-bold shadow-xl"
                           style={{ 
-                            background: `linear-gradient(135deg, ${COLORS.DARK_GREY} 0%, #1e272e 100%)`,
+                            background: `linear-gradient(135deg, ${COLORS.DARK_GREY} 0%, ${COLORS.UI.TESTIMONIAL_BG_DARK} 100%)`,
                             border: `2px solid ${COLORS.PRIMARY}`
                           }}
                         >
