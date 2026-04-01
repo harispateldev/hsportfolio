@@ -13,6 +13,8 @@ export const COLORS = {
   DARK_GREY: '#3a3b3c',
   LIGHT_GREY: '#dfe6e9',
   WHITE: '#ffffff',
+  GREY_TEXT: '#d1d5db',
+  DARK_GREY_TEXT: '#4b5563',
   
   // Dark Mode semantic colors
   DARK: {
