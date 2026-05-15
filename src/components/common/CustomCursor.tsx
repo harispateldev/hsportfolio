@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { COLORS } from '../../constants/colors';
 
 const CustomCursor: React.FC = () => {

@@ -74,7 +74,7 @@ function App() {
         </FadeInSection>
         
         <FadeInSection delay={0.1}>
-          <SkillsSection isDark={isDark} />
+          <SkillsSection />
         </FadeInSection>
         
         <FadeInSection delay={0.1}>

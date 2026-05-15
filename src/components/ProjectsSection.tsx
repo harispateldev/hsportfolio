@@ -18,7 +18,7 @@ const projectImages: Record<string, string> = {
 }
 
 // Sub-component for 3D Tilt Card
-const ProjectCard = ({ project, idx, isDark, onClick }: { project: any, idx: number, isDark: boolean, onClick: () => void }) => {
+const ProjectCard = ({ project, isDark, onClick }: { project: any, isDark: boolean, onClick: () => void }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -159,11 +159,10 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ isDark }) => {
 
         <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatePresence mode="popLayout">
-                {filteredProjects.map((project, idx) => (
+                {filteredProjects.map((project) => (
                     <ProjectCard 
                         key={project.name} 
                         project={project} 
-                        idx={idx} 
                         isDark={isDark} 
                         onClick={() => setSelectedIndex(projects.indexOf(project))} 
                     />

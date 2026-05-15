@@ -1,9 +1,7 @@
 import { useAppSelector } from '../redux/hooks'
-import { COLORS } from '../constants/colors'
 import { motion } from 'framer-motion'
 
 interface SkillsSectionProps {
-  isDark: boolean
 }
 
 
@@ -11,7 +9,7 @@ interface SkillsSectionProps {
  * SkillsSection Component
  * Displays a grid of technical skills and tools with their respective icons.
  */
-const SkillsSection: React.FC<SkillsSectionProps> = ({ isDark }) => {
+const SkillsSection: React.FC<SkillsSectionProps> = () => {
   const { skills: skillData } = useAppSelector((state) => state.portfolio.data) || {}
 
   if (!skillData) return null
