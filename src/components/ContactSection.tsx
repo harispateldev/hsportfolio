@@ -15,6 +15,7 @@ import { useState, useRef } from 'react'
 import { Input, Button, App as AntdApp } from 'antd'
 import emailjs from '@emailjs/browser'
 import { EMAILJS_CONFIG } from '../constants/config'
+import Magnetic from './common/Magnetic'
 
 const { TextArea } = Input
 
@@ -140,24 +141,27 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
                     borderColor: isDark ? COLORS.UI.BORDER_DARK : COLORS.UI.BORDER_LIGHT
                   }}
                 />
-                <Button 
-                  type="primary" 
-                  htmlType="submit" 
-                  icon={<SendOutlined />} 
-                  loading={loading}
-                  block
-                  size="large"
-                  style={{ 
-                    borderRadius: '12px',
-                    height: '48px',
-                    backgroundColor: COLORS.PRIMARY,
-                    borderColor: COLORS.PRIMARY,
-                    color: COLORS.DARK_GREY,
-                    fontWeight: 600
-                  }}
-                >
-                  Send Message
-                </Button>
+                <Magnetic>
+                  <Button 
+                    type="primary" 
+                    htmlType="submit" 
+                    icon={<SendOutlined />} 
+                    loading={loading}
+                    block
+                    data-magnetic
+                    size="large"
+                    style={{ 
+                      borderRadius: '12px',
+                      height: '48px',
+                      backgroundColor: COLORS.PRIMARY,
+                      borderColor: COLORS.PRIMARY,
+                      color: COLORS.DARK_GREY,
+                      fontWeight: 600
+                    }}
+                  >
+                    Send Message
+                  </Button>
+                </Magnetic>
               </motion.form>
             ) : (
               <motion.div
@@ -198,21 +202,23 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {contact?.socialLinks?.map((link, idx) => (
-              <motion.a
-                key={idx}
-                href={link.url}
-                target={link.url.startsWith('mailto') ? undefined : '_blank'}
-                rel="noopener noreferrer"
-                className="social-icon-btn"
-                title={link.name}
-                whileHover={{ y: -5, scale: 1.1 }}
-                style={{
-                  backgroundColor: isDark ? COLORS.DARK.CARD_BG : COLORS.LIGHT_GREY,
-                  color: isDark ? (link.darkColor || COLORS.WHITE) : (link.lightColor || COLORS.DARK_GREY),
-                }}
-              >
-                {iconMap[link.iconName] || <MailOutlined />}
-              </motion.a>
+              <Magnetic key={idx}>
+                <motion.a
+                  href={link.url}
+                  target={link.url.startsWith('mailto') ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="social-icon-btn"
+                  data-magnetic
+                  title={link.name}
+                  whileHover={{ y: -5, scale: 1.1 }}
+                  style={{
+                    backgroundColor: isDark ? COLORS.DARK.CARD_BG : COLORS.LIGHT_GREY,
+                    color: isDark ? (link.darkColor || COLORS.WHITE) : (link.lightColor || COLORS.DARK_GREY),
+                  }}
+                >
+                  {iconMap[link.iconName] || <MailOutlined />}
+                </motion.a>
+              </Magnetic>
             ))}
           </div>
         </div>

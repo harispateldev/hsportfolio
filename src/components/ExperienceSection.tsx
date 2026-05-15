@@ -1,7 +1,7 @@
 import { useAppSelector } from '../redux/hooks'
-import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
+import { motion, useScroll, useSpring } from 'framer-motion'
+import { useRef } from 'react'
 import { COLORS } from '../constants/colors'
-import { Steps, ConfigProvider, theme } from 'antd'
 
 interface ExperienceSectionProps {
   isDark: boolean
@@ -9,87 +9,86 @@ interface ExperienceSectionProps {
 
 /**
  * ExperienceSection Component
- * Displays a timeline of professional experience using Ant Design Steps.
- * Uses a horizontal layout on desktop and vertical on mobile.
+ * Displays a professional vertical timeline of professional experience.
+ * Uses Glassmorphism and scroll-linked animations for a premium feel.
  */
 const ExperienceSection: React.FC<ExperienceSectionProps> = ({ isDark }) => {
   const { experience: experiences } = useAppSelector((state) => state.portfolio.data) || {}
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end center"]
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   if (!experiences) return null
-
-  const stepItems = experiences.map((exp) => {
-    const isPresent = exp.duration.includes('Present')
-    return {
-      title: (
-        <div className="flex flex-col">
-          <span className={`font-semibold text-sm ${isDark ? 'text-white' : 'text-gray-800'}`}>
-            {exp.company}
-          </span>
-          <span className={`text-xs font-normal mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-            {exp.duration}
-          </span>
-        </div>
-      ),
-      description: (
-        <span className={`text-xs block mt-2 max-w-[150px] ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-          {exp.role}
-        </span>
-      ),
-      icon: isPresent ? (
-        <LoadingOutlined />
-      ) : (
-        <CheckCircleOutlined />
-      ),
-      status: isPresent ? 'process' as const : 'finish' as const,
-    }
-  })
-
-  // Find the current active step index (index of "Present" role, otherwise the last one)
-  const currentIndex = experiences.findIndex(e => e.duration.includes('Present'))
-  const activeStep = currentIndex !== -1 ? currentIndex : experiences.length - 1
 
   return (
     <section
       id="experience"
-      className={`py-12 ${isDark ? 'section-dark-1' : 'section-light-1'}`}
-      style={{
-        backgroundColor: isDark ? undefined : COLORS.EXPERIENCE_BG
-      }}
+      className={`py-20 relative overflow-hidden ${isDark ? 'section-dark-1' : 'section-light-1'}`}
     >
-      <p className={`section-title ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
-        EXPERIENCE
-      </p>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <p className={`section-title !pt-0 mb-16 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+          PROFESSIONAL JOURNEY
+        </p>
 
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <ConfigProvider
-          theme={{
-            algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-            token: {
-              colorPrimary: isDark ? COLORS.PRIMARY : COLORS.DARK_GREY,
-              colorTextDescription: isDark ? COLORS.GREY_TEXT : COLORS.DARK_GREY_TEXT, // gray-300 / gray-600
-            }
-          }}
-        >
-          {/* Desktop View: Horizontal Timeline */}
-          <div className="hidden lg:block">
-            <Steps
-              direction="horizontal"
-              current={activeStep}
-              items={stepItems}
-              labelPlacement="vertical"
-              className="px-4"
-            />
-          </div>
+        <div ref={containerRef} className="relative">
+          {/* Animated Vertical Line */}
+          <motion.div 
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20"
+            style={{ 
+                transformOrigin: "top",
+                scaleY,
+                backgroundColor: `${COLORS.PRIMARY}40`
+            }}
+          />
 
-          {/* Mobile View: Vertical List */}
-          <div className="lg:hidden">
-            <Steps
-              direction="vertical"
-              current={activeStep}
-              items={stepItems}
-            />
+          <div className="space-y-12">
+            {experiences.map((exp, idx) => {
+              const isEven = idx % 2 === 0;
+              return (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className={`relative flex items-center justify-between w-full mb-8 ${isEven ? 'md:flex-row-reverse' : ''}`}
+                >
+                  {/* Timeline Dot */}
+                  <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-primary z-20 -translate-x-1/2 shadow-[0_0_15px_rgba(233,213,161,0.8)]" style={{ backgroundColor: COLORS.PRIMARY }} />
+
+                  {/* Spacer for desktop */}
+                  <div className="hidden md:block w-[45%]" />
+
+                  {/* Content Card */}
+                  <div className={`ml-12 md:ml-0 w-full md:w-[45%] p-6 rounded-2xl transition-all duration-300 ${
+                    isDark 
+                    ? 'glass-effect bg-white/5 border-white/10 hover:bg-white/10' 
+                    : 'bg-white border-gray-100 shadow-xl hover:shadow-2xl'
+                  }`}>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary" style={{ color: COLORS.PRIMARY }}>
+                      {exp.duration}
+                    </span>
+                    <h3 className={`text-lg font-bold mt-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      {exp.company}
+                    </h3>
+                    <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                      {exp.role}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
-        </ConfigProvider>
+        </div>
       </div>
     </section>
   )

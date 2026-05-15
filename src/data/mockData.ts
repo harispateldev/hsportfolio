@@ -4,7 +4,7 @@ import { IMAGES } from '../constants/IMAGES';
 export const mockData = {
   hero: {
     name: "HARIS PATEL",
-    roles: ["SOFTWARE ENGINEER", "FULLSTACK DEVELOPER", "MOBILE APP DEVELOPER"],
+    roles: ["SOFTWARE ENGINEER", "FULL STACK DEVELOPER", "MOBILE APP DEVELOPER"],
     logoLink: "https://hspdev.blogspot.com/",
     aboutAnchorText: "About Me"
   },
@@ -60,6 +60,10 @@ export const mockData = {
     { name: 'TAILWIND CSS', logoUrl: IMAGES.Tailwind },
     { name: 'NODE JS', logoUrl: IMAGES.nodejs },
     { name: 'MY SQL', logoUrl: IMAGES.Mysql },
+    { name: 'MONGO DB', logoUrl: IMAGES.mongodb },
+    { name: 'FIREBASE', logoUrl: IMAGES.firebase },
+    { name: 'SUPABASE', logoUrl: IMAGES.supabase },
+    { name: 'PYTHON', logoUrl: IMAGES.python },
   ],
   projects: [
     {
@@ -67,21 +71,24 @@ export const mockData = {
       year: '2023',
       stack: 'React Js, Node (Adonis), MySql, Ant Design',
       imageKey: 'dental',
-      images: ['dental', 'dental1']
+      images: ['dental', 'dental1'],
+      category: 'Web Development'
     },
     {
       name: 'THE PARTIMERS',
       year: '2022',
       stack: 'React Js, Node (Express), MySql, Material UI',
       imageKey: 'partimer',
-      images: ['partimer', 'x']
+      images: ['partimer', 'x'],
+      category: 'Web Development'
     },
     {
       name: 'MY PHONE BOOK',
       year: '2021',
       stack: 'React Js, PHP (Laravel), MySql, Material UI',
       imageKey: 'phonebook',
-      images: ['phonebook', 'phonebook2']
+      images: ['phonebook', 'phonebook2'],
+      category: 'Mobile Apps'
     },
   ],
   stats: {
@@ -126,13 +133,33 @@ export const mockData = {
         text: 'Very satisfied with the final outcome. Great commitment to deliver quality service. Cheers team. Will get back again.',
       },
     ],
-    // fiverr: {
-    //   username: "harispatel62",
-    //   url: "https://www.fiverr.com/harispatel62",
-    //   rating: 5.0,
-    //   bannerText: "HSP designer & developers"
-    // }
   },
+  expertise: [
+    {
+      title: "Web Architecture",
+      description: "Crafting scalable, high-performance web ecosystems using React, Node.js, and modern cloud infrastructures with a focus on security and efficiency.",
+      skills: ["Scalability", "Security", "SEO", "Cloud Integration"],
+      icon: "GlobalOutlined"
+    },
+    {
+      title: "Mobile Mastery",
+      description: "Delivering premium iOS and Android applications with React Native, focusing on fluid performance, native integrations, and seamless UX.",
+      skills: ["Native Modules", "App Store/Play Store", "Performance", "Offline First"],
+      icon: "MobileOutlined"
+    },
+    {
+      title: "Technical Leadership",
+      description: "Overseeing end-to-end product lifecycles, from initial system design and database architecture to final deployment and maintenance.",
+      skills: ["Architecture", "Code Quality", "Optimization", "Mentorship"],
+      icon: "SolutionOutlined"
+    }
+  ],
+  achievements: [
+    { label: "Years Experience", value: 8, suffix: "+" },
+    { label: "Projects Completed", value: 50, suffix: "+" },
+    { label: "Technologies Mastered", value: 12, suffix: "" },
+    { label: "Client Satisfaction", value: 100, suffix: "%" }
+  ],
   contact: {
     email: "harispatel62@gmail.com",
     socialLinks: [

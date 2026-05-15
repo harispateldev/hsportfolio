@@ -6,6 +6,7 @@ import { BulbOutlined, BulbFilled } from '@ant-design/icons'
 import { COLORS } from './constants/colors'
 import HeroSection from './components/HeroSection'
 import AboutSection from './components/AboutSection'
+import ExpertiseSection from './components/ExpertiseSection'
 import ExperienceSection from './components/ExperienceSection'
 import SkillsSection from './components/SkillsSection'
 import ProjectsSection from './components/ProjectsSection'
@@ -15,6 +16,8 @@ import CustomCursor from './components/common/CustomCursor'
 import ScrollProgress from './components/common/ScrollProgress'
 
 import FadeInSection from './components/common/FadeInSection'
+import SmoothScroll from './components/common/SmoothScroll'
+import Navbar from './components/common/Navbar'
 
 /**
  * Main Application Component
@@ -49,6 +52,8 @@ function App() {
   return (
     <AntdApp>
       <div>
+        <Navbar isDark={isDark} />
+        <SmoothScroll />
         <CustomCursor />
         <ScrollProgress />
         {/* Scrollable Portfolio Sections with Fade-in Animation */}
@@ -58,6 +63,10 @@ function App() {
         
         <FadeInSection delay={0.1}>
           <AboutSection isDark={isDark} />
+        </FadeInSection>
+
+        <FadeInSection delay={0.1}>
+          <ExpertiseSection isDark={isDark} />
         </FadeInSection>
         
         <FadeInSection delay={0.1}>

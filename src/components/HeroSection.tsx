@@ -3,7 +3,8 @@ import { Typewriter } from 'react-simple-typewriter'
 import { IMAGES } from '../constants/IMAGES'
 import { COLORS } from '../constants/colors'
 import DynamicBackground from './common/DynamicBackground'
-import { motion } from 'framer-motion'
+import Magnetic from './common/Magnetic'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 interface HeroSectionProps {
   isDark: boolean
@@ -16,22 +17,55 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
   const { hero } = useAppSelector((state) => state.portfolio.data) || {}
   
+  // Parallax Tilt Effect for Logo
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   if (!hero) return null
 
   return (
     <section
       id="home"
-      // Standard section background based on theme
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className={`relative flex flex-col items-center justify-center min-h-screen py-16 overflow-hidden ${isDark ? 'section-dark-1' : 'section-light-1'}`}
     >
       <DynamicBackground isDark={isDark} />
       
-      {/* Brand Identity: Logo Linked to Blog */}
+      {/* Brand Identity: Logo with 3D Parallax */}
       <motion.a
         href={hero.logoLink}
         target="_blank"
         rel="noopener noreferrer"
         className="mb-6 z-10"
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -39,13 +73,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
         <img
           src={isDark ? IMAGES.hsLogo : IMAGES.DarkLogo}
           alt="HSP DEV Logo"
-          className="w-24 h-auto object-contain"
+          className="w-32 h-auto object-contain transition-all duration-300 filter drop-shadow-2xl"
+          style={{ transform: "translateZ(50px)" }}
         />
       </motion.a>
 
       {/* Primary Branding: Developer Name */}
       <motion.h1
-        className="text-2xl font-bold tracking-widest uppercase mb-2 z-10"
+        className="text-4xl md:text-6xl font-bold tracking-[0.2em] uppercase mb-4 z-10 text-center"
         style={{ color: isDark ? COLORS.WHITE : COLORS.DARK_GREY }}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -56,7 +91,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
 
       {/* Dynamic Subtitle: Professional Roles (Typewriter Animation) */}
       <motion.p
-        className="text-sm font-semibold tracking-widest uppercase z-10"
+        className="text-sm md:text-base font-semibold tracking-[0.4em] uppercase z-10"
         style={{ color: isDark ? COLORS.LIGHT_GREY : COLORS.DARK_GREY_TEXT }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -73,27 +108,32 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
         />
       </motion.p>
 
-      {/* On-Page Navigation: Indicator to scroll to About Section */}
-      <div className="absolute bottom-10 left-0 right-0 flex justify-center">
-        <a
-          href="#about"
-          className={`flex flex-col items-center gap-1 text-xs tracking-widest uppercase opacity-70 hover:opacity-100 transition-opacity ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
-        >
-          <span>{hero.aboutAnchorText}</span>
-          <svg
-            className="w-4 h-4 animate-bounce"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      {/* On-Page Navigation: Magnetic Scroll Indicator */}
+      <div className="absolute bottom-10 left-0 right-0 flex justify-center z-10">
+        <Magnetic>
+          <a
+            href="#about"
+            data-magnetic
+            className={`flex flex-col items-center gap-2 p-4 text-xs tracking-widest uppercase transition-all duration-300 ${isDark ? 'text-gray-300 hover:text-primary' : 'text-gray-600 hover:text-black'}`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </a>
+            <span>{hero.aboutAnchorText}</span>
+            <motion.svg
+              className="w-5 h-5"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </motion.svg>
+          </a>
+        </Magnetic>
       </div>
     </section>
   )

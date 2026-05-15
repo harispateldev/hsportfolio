@@ -5,6 +5,7 @@ import { COLORS } from '../../constants/colors';
 const CustomCursor: React.FC = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
+    const [isSnapped, setIsSnapped] = useState(false);
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -13,6 +14,14 @@ const CustomCursor: React.FC = () => {
 
         const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
+            const magneticTarget = target.closest('[data-magnetic]');
+            
+            if (magneticTarget) {
+                setIsSnapped(true);
+            } else {
+                setIsSnapped(false);
+            }
+
             if (
                 target.tagName === 'A' || 
                 target.tagName === 'BUTTON' || 
@@ -20,7 +29,8 @@ const CustomCursor: React.FC = () => {
                 target.closest('a') || 
                 target.closest('button') ||
                 target.closest('.project-card') ||
-                target.closest('.skill-icon-wrapper')
+                target.closest('.skill-icon-wrapper') ||
+                magneticTarget
             ) {
                 setIsHovering(true);
             } else {
@@ -47,8 +57,9 @@ const CustomCursor: React.FC = () => {
                     top: mousePosition.y - 5,
                 }}
                 animate={{
-                    scale: isHovering ? 2.2 : 1,
+                    scale: isSnapped ? 4 : (isHovering ? 2.2 : 1),
                     backgroundColor: isHovering ? COLORS.PRIMARY : COLORS.PRIMARY,
+                    opacity: isSnapped ? 0.3 : 1,
                     boxShadow: isHovering 
                         ? `0 0 0 1px rgba(0, 0, 0, 0.2), 0 0 30px ${COLORS.PRIMARY}, 0 0 10px #ffffff` 
                         : `0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 15px ${COLORS.PRIMARY}`,
