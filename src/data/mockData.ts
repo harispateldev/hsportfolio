@@ -15,7 +15,7 @@ export const mockData = {
       "Beyond the code, I'm passionate about visual storytelling. I use video design and motion graphics to turn complex ideas into engaging narratives—from dynamic brand promotions to detailed whiteboard animations that truly connect with an audience.",
       "I'm driven by a constant curiosity for what's next. Whether I'm architecting a complex system or directing a visual project, my goal is always the same: to deliver high-quality, efficient results that make a real difference."
     ],
-    resumeLink: "https://drive.google.com/file/d/1lsfemSQaogkUJeDhV0sZ7edcoOGN5szH/view?usp=sharing"
+    resumeLink: "https://drive.google.com/file/d/1CmZu7mgeoPdAPG7J6bMUQLp1g4Qi5gnh/view?usp=sharing"
   },
   experience: [
     {
@@ -51,7 +51,7 @@ export const mockData = {
   ],
   skills: [
     { name: 'REACT NATIVE', logoUrl: IMAGES.ReactLogo },
-    { name: 'REACT JS', logoUrl: IMAGES.ReactNative},
+    { name: 'REACT JS', logoUrl: IMAGES.ReactNative },
     { name: 'HTML 5', logoUrl: IMAGES.HtmlLogo },
     { name: 'CSS 3', logoUrl: IMAGES.CssLogo },
     { name: 'JAVASCRIPT', logoUrl: IMAGES.JsLogo },
@@ -140,8 +140,8 @@ export const mockData = {
       { name: 'GitHub', url: 'https://github.com/Harispateldev', iconName: 'GithubOutlined', darkColor: COLORS.WHITE, lightColor: COLORS.DARK_GREY },
       { name: 'GitLab', url: 'https://gitlab.com/harispatel', iconName: 'GitlabOutlined', darkColor: COLORS.BRAND.GITLAB, lightColor: COLORS.BRAND.GITLAB },
       // { name: 'Fiverr', url: 'https://www.fiverr.com/harispatel62', iconName: 'Fiverr', darkColor: COLORS.BRAND.FIVERR, lightColor: COLORS.BRAND.FIVERR },
-      { name: 'Mail', url: 'mailto:harispatel62@gmail.com', iconName: 'MailOutlined', darkColor: COLORS.BRAND.GOOGLE_RED, lightColor: COLORS.BRAND.GOOGLE_RED },
-      { name: 'WhatsApp', url: 'https://wa.me/+917795434226', iconName: 'WhatsAppOutlined', darkColor: COLORS.BRAND.WHATSAPP, lightColor: COLORS.BRAND.WHATSAPP },
+      { name: 'Mail', url: 'mailto:harispateldev@gmail.com', iconName: 'MailOutlined', darkColor: COLORS.BRAND.GOOGLE_RED, lightColor: COLORS.BRAND.GOOGLE_RED },
+      { name: 'WhatsApp', url: 'https://wa.me/+919742493219', iconName: 'WhatsAppOutlined', darkColor: COLORS.BRAND.WHATSAPP, lightColor: COLORS.BRAND.WHATSAPP },
     ],
     copyright: "© 2026"
   }

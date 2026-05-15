@@ -23,10 +23,6 @@ const AboutSection: React.FC<AboutSectionProps> = ({ isDark }) => {
     <section
       id="about"
       className={`py-16 ${isDark ? 'section-dark-2' : 'section-light-2'}`}
-      style={{
-        // Use secondary color for light mode background as requested
-        backgroundColor: isDark ? undefined : COLORS.SECONDARY
-      }}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-8 items-stretch">
@@ -45,10 +41,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ isDark }) => {
             
             {/* Tech Stack Icons Tray - Fixed Height */}
             <div
-              className={`flex items-center justify-center gap-4 p-4 rounded-xl shrink-0 ${isDark ? 'bg-dark-1' : 'bg-light-1'}`}
-              style={{
-                backgroundColor: isDark ? COLORS.DARK.STATS_BG : COLORS.WHITE
-              }}
+              className={`flex items-center justify-center gap-4 p-4 rounded-xl shrink-0 ${isDark ? 'section-dark-1' : 'section-light-1'}`}
             >
              
               <img 
