@@ -15,7 +15,7 @@ export const mockData = {
       "Beyond the code, I'm passionate about visual storytelling. I use video design and motion graphics to turn complex ideas into engaging narratives—from dynamic brand promotions to detailed whiteboard animations that truly connect with an audience.",
       "I'm driven by a constant curiosity for what's next. Whether I'm architecting a complex system or directing a visual project, my goal is always the same: to deliver high-quality, efficient results that make a real difference."
     ],
-    resumeLink: "https://drive.google.com/file/d/1CmZu7mgeoPdAPG7J6bMUQLp1g4Qi5gnh/view?usp=sharing"
+    resumeLink: "https://drive.google.com/file/d/12VlYTMwwpTQL_LeGoeyXLgI5Yq7KNjT6/view?usp=sharing"
   },
   experience: [
     {
