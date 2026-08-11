@@ -4,7 +4,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { COLORS } from '../constants/colors'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 interface StatsSectionProps {
   isDark: boolean
@@ -34,6 +34,73 @@ const ProficiencyBar = ({ label, percentage, isDark }: { label: string, percenta
         />
       </div>
     </div>
+  );
+};
+
+// Sub-component for 3D Tilt Card with Parallax Glare
+const TiltCard = ({ children, className, style = {} }: { children: React.ReactNode, className: string, style?: React.CSSProperties }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const glareRef = useRef<HTMLDivElement>(null);
+
+  // High performance smooth springs (snappier transition)
+  const mouseXSpring = useSpring(x, { stiffness: 450, damping: 25 });
+  const mouseYSpring = useSpring(y, { stiffness: 450, damping: 25 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+
+    if (glareRef.current) {
+      glareRef.current.style.opacity = "1";
+      glareRef.current.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 50%)`;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+    if (glareRef.current) {
+      glareRef.current.style.opacity = "0";
+    }
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      whileHover={{ scale: 1.025 }}
+      transition={{ type: "tween", ease: [0.03, 0.98, 0.52, 0.99], duration: 0.4 }}
+      className={`relative overflow-hidden ${className}`}
+      style={{
+        ...style,
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+        perspective: "1000px",
+        willChange: "transform",
+      }}
+    >
+      {/* Dynamic light reflection glare overlay */}
+      <div
+        ref={glareRef}
+        className="absolute inset-0 pointer-events-none z-50 opacity-0 transition-opacity duration-300 rounded-2xl"
+        style={{
+          mixBlendMode: "overlay",
+        }}
+      />
+      {children}
+    </motion.div>
   );
 };
 
@@ -127,16 +194,121 @@ const StatsSectionProps_Inner: React.FC<StatsSectionProps> = ({ isDark }) => {
                     <ProficiencyBar label="Mobile Development" percentage={90} isDark={isDark} />
                     <ProficiencyBar label="Backend Engineering" percentage={85} isDark={isDark} />
                     <ProficiencyBar label="UI/UX Design" percentage={80} isDark={isDark} />
-                </div>
+                </div>                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <TiltCard
+                      className={`rounded-2xl overflow-hidden ${isDark ? 'glass-effect bg-white/5' : 'glass-effect-light shadow-xl'}`}
+                    >
+                        <a href={stats.dailyDevUrl} target="_blank" rel="noopener noreferrer" className="block h-full w-full" style={{ transform: "translateZ(30px)" }}>
+                            <img
+                            src={stats.dailyDevCardApi}
+                            alt="Dev Card"
+                            className="w-full h-full object-cover"
+                            />
+                        </a>
+                    </TiltCard>
 
-                <div className={`rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] ${isDark ? 'glass-effect bg-white/5' : 'glass-effect-light shadow-xl'}`}>
-                    <a href={stats.dailyDevUrl} target="_blank" rel="noopener noreferrer" className="block h-full">
-                        <img
-                        src={stats.dailyDevCardApi}
-                        alt="Dev Card"
-                        className="w-full h-full object-cover"
-                        />
-                    </a>
+                    {stats.fiverrStats && (
+                      <TiltCard
+                        className={`p-6 rounded-2xl flex flex-col justify-between ${
+                          isDark ? 'glass-effect bg-white/5 border border-white/10' : 'bg-white shadow-xl border border-gray-100'
+                        }`}
+                      >
+                        {/* Top: Brand Header & Level Badge */}
+                        <div className="flex justify-between items-start mb-3" style={{ transform: "translateZ(30px)" }}>
+                          <div className="flex flex-col">
+                            <div className="flex items-center gap-1 mb-0.5">
+                              <svg viewBox="0 0 48 48" className="w-5 h-5" style={{ color: COLORS.BRAND.FIVERR }} fill="currentColor">
+                                <path d="M30.709 4.5h-7.474c-5.447 0-10.198 4.294-9.88 12.076H7.99v7.245h5.724V43.5h8.498V23.821h8.856V43.5h8.944V16.576H22.748v-1.879a2.805 2.805 0 0 1 2.848-2.951h5.113Z"/>
+                              </svg>
+                              <span className="font-extrabold text-[15px] tracking-tight" style={{ color: COLORS.BRAND.FIVERR }}>fiverr</span>
+                            </div>
+                            <a 
+                              href={stats.fiverrStats.profileUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className={`text-[11px] font-semibold hover:underline ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
+                            >
+                              @{stats.fiverrStats.username}
+                            </a>
+                            <div className="flex items-center gap-1.5 mt-1">
+                              <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                              </span>
+                              <span className={`text-[9px] tracking-wider uppercase font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>Online</span>
+                            </div>
+                          </div>
+
+                          {/* Level Badge */}
+                          <div className="flex flex-col items-center">
+                            <div className="relative flex items-center justify-center w-8 h-8">
+                              <svg viewBox="0 0 100 100" className="absolute w-full h-full" style={{ color: '#ea54a2' }} fill="currentColor">
+                                <path d="M50 2.5 L95 35 L77.5 90 L22.5 90 L5 35 Z" />
+                              </svg>
+                              <span className="relative text-white font-black text-[10px]">★</span>
+                            </div>
+                            <span className={`text-[8px] font-extrabold mt-0.5 uppercase tracking-wider ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                              {stats.fiverrStats.level}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Middle: Rating and Metric Bars */}
+                        <div className="space-y-2.5 my-2" style={{ transform: "translateZ(20px)" }}>
+                          <div className="flex items-center justify-between">
+                            <span className={`text-[9px] font-bold uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Rating</span>
+                            <div className="flex items-center gap-0.5">
+                              <span className="text-[11px] font-bold" style={{ color: COLORS.PRIMARY }}>{stats.fiverrStats.rating}</span>
+                              <span style={{ color: COLORS.PRIMARY, fontSize: '11px' }}>★</span>
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between mb-0.5">
+                              <span className={`text-[9px] font-bold uppercase tracking-wider ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Success Score</span>
+                              <span className="text-[9px] font-bold text-emerald-500">{stats.fiverrStats.successScore}/10</span>
+                            </div>
+                            <div className={`h-1 w-full rounded-full overflow-hidden ${isDark ? 'bg-white/10' : 'bg-gray-100'}`}>
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${stats.fiverrStats.successScore * 10}%` }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, ease: "easeOut" }}
+                                className="h-full rounded-full bg-emerald-500"
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between mb-0.5">
+                              <span className={`text-[9px] font-bold uppercase tracking-wider ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Response Rate</span>
+                              <span className="text-[9px] font-bold text-emerald-500">{stats.fiverrStats.responseRate}%</span>
+                            </div>
+                            <div className={`h-1 w-full rounded-full overflow-hidden ${isDark ? 'bg-white/10' : 'bg-gray-100'}`}>
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${stats.fiverrStats.responseRate}%` }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, ease: "easeOut" }}
+                                className="h-full rounded-full bg-emerald-500"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bottom: Counts */}
+                        <div className={`grid grid-cols-2 gap-2 pt-2 border-t ${isDark ? 'border-white/10' : 'border-gray-100'}`} style={{ transform: "translateZ(25px)" }}>
+                          <div className="text-center">
+                            <p className="text-sm font-black" style={{ color: COLORS.BRAND.FIVERR }}>{stats.fiverrStats.orders}+</p>
+                            <p className={`text-[8px] font-bold uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Orders</p>
+                          </div>
+                          <div className="text-center">
+                            <p className="text-sm font-black" style={{ color: COLORS.BRAND.FIVERR }}>{stats.fiverrStats.uniqueClients}+</p>
+                            <p className={`text-[8px] font-bold uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Clients</p>
+                          </div>
+                        </div>
+                      </TiltCard>
+                    )}
                 </div>
             </div>
 
@@ -155,15 +327,24 @@ const StatsSectionProps_Inner: React.FC<StatsSectionProps> = ({ isDark }) => {
                 <Slider {...slickSettings}>
                   {testimonials?.map((t, idx) => (
                     <div key={idx} className="outline-none">
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-xl"
-                          style={{ background: `linear-gradient(135deg, ${COLORS.DARK_GREY} 0%, ${COLORS.UI.TESTIMONIAL_BG_DARK} 100%)`, border: `2px solid ${COLORS.PRIMARY}` }}>
-                          {t.name[0].toUpperCase()}
+                      <div className="flex justify-between items-start mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-xl"
+                            style={{ background: `linear-gradient(135deg, ${COLORS.DARK_GREY} 0%, ${COLORS.UI.TESTIMONIAL_BG_DARK} 100%)`, border: `2px solid ${COLORS.PRIMARY}` }}>
+                            {t.name[0].toUpperCase()}
+                          </div>
+                          <div>
+                            <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>{t.name}</p>
+                            <p className={`text-[10px] opacity-60 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{t.flag}</p>
+                            <StarRating count={t.stars} />
+                          </div>
                         </div>
-                        <div>
-                          <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>{t.name}</p>
-                          <p className={`text-[10px] opacity-60 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{t.flag}</p>
-                          <StarRating count={t.stars} />
+                        
+                        <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                          <svg viewBox="0 0 48 48" className="w-3 h-3" style={{ color: COLORS.BRAND.FIVERR }} fill="currentColor">
+                            <path d="M30.709 4.5h-7.474c-5.447 0-10.198 4.294-9.88 12.076H7.99v7.245h5.724V43.5h8.498V23.821h8.856V43.5h8.944V16.576H22.748v-1.879a2.805 2.805 0 0 1 2.848-2.951h5.113Z"/>
+                          </svg>
+                          <span className="text-[8px] font-extrabold uppercase tracking-wider text-emerald-500">Verified</span>
                         </div>
                       </div>
                       <p className={`text-sm leading-relaxed italic border-l-2 pl-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} style={{ borderColor: COLORS.PRIMARY }}>

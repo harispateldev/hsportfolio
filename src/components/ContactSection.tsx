@@ -45,8 +45,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
     MailOutlined: <MailOutlined />,
     GitlabOutlined: <GitlabOutlined />,
     Fiverr: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-        <path d="M23.004 15.588a.995.995 0 10.001-1.99.995.995 0 000 1.99zm-2.983-10.767c.1 0 .195.01.284.027l.076.018a.989.989 0 00.686-1.717A.995.995 0 0021 4.002V3h-2v1H9V3H7v1H6a2 2 0 00-2 2v13a2 2 0 002 2h13a2 2 0 002-2v-1.412a1 1 0 00-.285-.693L19 15.586V18a.5.5 0 01-.5.5h-12A.5.5 0 016 18V8.5h13v3l1.999-.002V8a1 1 0 00-1-1h-.978z"/>
+      <svg viewBox="0 0 48 48" fill="currentColor" width="20" height="20">
+        <path d="M30.709 4.5h-7.474c-5.447 0-10.198 4.294-9.88 12.076H7.99v7.245h5.724V43.5h8.498V23.821h8.856V43.5h8.944V16.576H22.748v-1.879a2.805 2.805 0 0 1 2.848-2.951h5.113Z"/>
       </svg>
     )
   }

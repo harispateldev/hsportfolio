@@ -95,6 +95,16 @@ export const mockData = {
     dailyDevUrl: "https://app.daily.dev/harispatel62",
     dailyDevCardApi: "https://api.daily.dev/devcards/v2/WVzbZP0WZQu5i72nrMzZd.png?type=default&r=ijb",
     dailyDevUsername: "@harispatel62",
+    fiverrStats: {
+      username: "harispatel62",
+      profileUrl: "https://www.fiverr.com/harispatel62",
+      level: "Level 1",
+      rating: 4.9,
+      successScore: 9,
+      responseRate: 100,
+      orders: 92,
+      uniqueClients: 39,
+    },
     testimonials: [
       {
         name: 'jshank29',
@@ -166,7 +176,7 @@ export const mockData = {
       { name: 'LinkedIn', url: 'https://www.linkedin.com/in/haris-patel-dev/', iconName: 'LinkedinOutlined', darkColor: COLORS.BRAND.LINKEDIN, lightColor: COLORS.BRAND.LINKEDIN },
       { name: 'GitHub', url: 'https://github.com/Harispateldev', iconName: 'GithubOutlined', darkColor: COLORS.WHITE, lightColor: COLORS.DARK_GREY },
       { name: 'GitLab', url: 'https://gitlab.com/harispatel', iconName: 'GitlabOutlined', darkColor: COLORS.BRAND.GITLAB, lightColor: COLORS.BRAND.GITLAB },
-      // { name: 'Fiverr', url: 'https://www.fiverr.com/harispatel62', iconName: 'Fiverr', darkColor: COLORS.BRAND.FIVERR, lightColor: COLORS.BRAND.FIVERR },
+      { name: 'Fiverr', url: 'https://www.fiverr.com/harispatel62', iconName: 'Fiverr', darkColor: COLORS.BRAND.FIVERR, lightColor: COLORS.BRAND.FIVERR },
       { name: 'Mail', url: 'mailto:harispateldev@gmail.com', iconName: 'MailOutlined', darkColor: COLORS.BRAND.GOOGLE_RED, lightColor: COLORS.BRAND.GOOGLE_RED },
       { name: 'WhatsApp', url: 'https://wa.me/+919742493219', iconName: 'WhatsAppOutlined', darkColor: COLORS.BRAND.WHATSAPP, lightColor: COLORS.BRAND.WHATSAPP },
     ],
